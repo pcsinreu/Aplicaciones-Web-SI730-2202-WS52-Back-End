@@ -40,23 +40,11 @@ public class CategoryRepository : ICategoryRepositoy
         category.Name = name;
         category.Description ="Description" + name;*/
 
-        using (var transacction = await _learningCentDbContext.Database.BeginTransactionAsync())
-        {
-            try
-            {
+    
                 await _learningCentDbContext.Categories.AddAsync(category);
                 await _learningCentDbContext.SaveChangesAsync();
-                await transacction.CommitAsync();
-            }
-            catch (Exception ex)
-            {
-                await transacction.RollbackAsync();
-            }
-            finally
-            {
-                await transacction.DisposeAsync();
-            }
-        }
+                //await transacction.CommitAsync();
+
 
         return true;
     }

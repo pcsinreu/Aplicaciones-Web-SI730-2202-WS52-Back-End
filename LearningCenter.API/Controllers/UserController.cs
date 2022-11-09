@@ -38,6 +38,7 @@ namespace LearningCenter.API.Controllers
         
         // GET: api/User
         [HttpPost]
+        [AllowAnonymous]
         [Route("Signup")]
         [ProducesResponseType(typeof(bool), 200)]
         public async Task<IActionResult> Signup(UserResource userResource)

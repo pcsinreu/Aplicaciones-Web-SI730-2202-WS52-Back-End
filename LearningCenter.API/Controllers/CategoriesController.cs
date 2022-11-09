@@ -31,6 +31,7 @@ public class CategoriesController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<string>), 200)]
     //GET api/categories/byName?name
     [HttpGet("byName")]
+    [Authorize("root,admin,employee,customer")]
     public async Task<IActionResult> Get(string name,int p )
     {
         try
@@ -71,9 +72,6 @@ public class CategoriesController : ControllerBase
                 Success = true, Message = "Operacion realizada con esito", result
 
             };*/
-            
-            
-            
             return Ok(_mapper.Map<Category, CategoryResource>(result));
         }
         catch (Exception ex)
@@ -84,6 +82,7 @@ public class CategoriesController : ControllerBase
 
     // POST: api/Categories
     [HttpPost]
+    [Authorize("root,admin")]
     [ProducesResponseType(typeof(IActionResult), 201)]
     [ProducesResponseType(typeof(List<Category>), 400)]
     [ProducesResponseType(500)]
@@ -132,6 +131,7 @@ public class CategoriesController : ControllerBase
 
     // PUT: api/Categories/5
     [HttpPut("{id}")]
+    [Authorize("root,admin")]
     public async Task<IActionResult> Put(int id, [FromBody] Category category)
     {
         try
