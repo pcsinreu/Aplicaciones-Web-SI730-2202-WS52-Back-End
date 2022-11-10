@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LearningCenter.API.Controllers;
 
 
-[Authorize]
+
 [Route("api/[controller]")]
 [ApiController]
 [Produces(MediaTypeNames.Application.Json)]
