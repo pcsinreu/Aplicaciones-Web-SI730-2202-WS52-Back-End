@@ -30,10 +30,10 @@ namespace LearningCenter.API.Controllers
         [AllowAnonymous]
         [Route("Login")]
         public async Task<IActionResult> Login(UserResource userResource)
-        { 
-            var user = _mapper.Map<UserResource,User>(userResource);
-            var result = await _userDomain.Login(user);
-            return Ok(result);
+        {
+                var user = _mapper.Map<UserResource, User>(userResource);
+                var result = await _userDomain.Login(user);
+                return Ok(result);
         }   
         
         // GET: api/User

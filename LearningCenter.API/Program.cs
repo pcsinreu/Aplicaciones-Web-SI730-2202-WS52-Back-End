@@ -73,6 +73,21 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 });
 
+// The following line enables Application Insights telemetry collection.
+builder.Services.AddApplicationInsightsTelemetry();
+
+
+//builder.Services.AddCors();
+var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy  =>
+        {
+            policy.WithOrigins("http://example.com");
+        });
+});
+
 
 var app = builder.Build();
 
@@ -89,6 +104,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
+/*
+app.UseCors(x => x
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
+*/
+app.UseCors(MyAllowSpecificOrigins);
+
+app.UseMiddleware<ErrorhandlerMiddleware>();
 
 app.UseMiddleware<JwtMiddleware>();
 
