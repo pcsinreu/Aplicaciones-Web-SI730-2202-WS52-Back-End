@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using LearningCenter.API.Handler.Query.Login;
 using LearningCenter.API.Resources;
 using LearningCenter.Domain;
 using LearningCenter.Infraestructure;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,21 +21,27 @@ namespace LearningCenter.API.Controllers
     {
         private readonly IUserDomain _userDomain;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
         
-        public UserController(IUserDomain userDomain,IMapper mapper)
+        public UserController(IUserDomain userDomain,IMapper mapper,IMediator mediator )
         {
             _userDomain = userDomain;
             _mapper = mapper;
+            _mediator = mediator;
         }
         // GET: api/User
         [HttpPost] 
         [AllowAnonymous]
         [Route("Login")]
-        public async Task<IActionResult> Login(UserResource userResource)
+        public async Task<IActionResult> Login(LoginRequest loginRequest)
         {
-                var user = _mapper.Map<UserResource, User>(userResource);
-                var result = await _userDomain.Login(user);
-                return Ok(result);
+               /// var user = _mapper.Map<UserResource, User>(userResource);
+               // var result = await _userDomain.Login(user);
+               // return Ok(result);
+
+               var result= await _mediator.Send(loginRequest);
+
+               return Ok(result);
         }   
         
         // GET: api/User

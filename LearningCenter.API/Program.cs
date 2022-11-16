@@ -1,9 +1,11 @@
+using System.Reflection;
 using System.Text.Json.Serialization;
 using LearningCenter.API.Mapper;
 using LearningCenter.API.Middleware;
 using LearningCenter.Domain;
 using LearningCenter.Infraestructure;
 using LearningCenter.Infraestructure.Context;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -76,6 +78,7 @@ builder.Services.AddAuthentication(options =>
 // The following line enables Application Insights telemetry collection.
 builder.Services.AddApplicationInsightsTelemetry();
 
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 //builder.Services.AddCors();
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
